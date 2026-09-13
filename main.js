@@ -19,6 +19,17 @@ const board = (() => {
     return {showBoard, writeBoard};
 })();
 
+function createPlayer(name, marker) {
+    if (marker.toLowerCase() !== 'o' && marker.toLowerCase() !== 'x') {
+        return false;
+        // returning boolean for GameController function that gives message to player
+    }
+    return {name, marker};
+}
+
 board.showBoard();
 board.writeBoard(8, 'x');
 board.showBoard();
+
+const player1 = createPlayer('Mark', 'O');
+console.log(player1)
