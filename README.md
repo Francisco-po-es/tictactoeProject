@@ -1,1 +1,15 @@
 # tictactoeProject
+This project is about making a tic tac toe play, first in the console and then in a website. The porpuse of this project is checking my skills in doing factory functions and evading global variables with closures.
+
+# Pseudocode
+We are going to create the board using an IIFE (module pattern) to keep it private and avoid global variables. Inside, we are going to store the board as an array of 9 empty strings. We are going to create a function called showBoard that simply returns this array so it can be read. Then, we are going to create a function called writeBoard that takes a position and a marker. We are going to relate that position to an index between 0 and 8. Before placing the marker, we have to verify if the position is between 0 and 8, and if that specific element is already marked. If it is not marked, we place the marker and return true. If it is already marked, we return false. After validating those steps, we return both functions to use them later.
+
+While we have the board ready, we are going to create a factory function for the players. This function will take the player's name and their marker (like 'X' or 'O'). We are going to return an object with those exact properties so we can generate multiple players easily.
+
+To make the game work, we are going to put everything together in a main controller using another IIFE. First, we are going to create two players (Player 1 and Player 2) using our player factory. We are going to store the active player in a variable called playerCurrent, starting with Player 1.
+
+We are going to create a function to check if someone won. We are going to store a master array that contains the winning index combinations (the straight and diagonal lines). We are going to call each combination and use those numbers as indices to check the board. We have to verify if the elements at those indices are empty or not. If they are not empty, we are going to use a loop to check if every element in that line matches the playerCurrent's marker. If they all match, it means the current player won, and we return true. If they don't match or are still empty, we return false.
+
+We are also going to create a function to check for a tie. We are going to use a loop to check the board to see if there are any empty elements left. If the elements are not empty, and clearly nobody won, we send a tie message and stop the game.
+
+Finally, we are going to create a function for the first movement. Inside this function, we are going to grab the playerCurrent's data and use the writeBoard function to make the play. If the play returns false (because the spot was taken), we tell the player to try again in another position. If it returns true, we are going to initiate the win-checking function. If it returns true, we congratulate the current player and end the game. If it returns false, we run the tie-checking function. If nobody won and there is no tie, we are going to switch the playerCurrent to the next player using an if statement: if the current player is Player 1, we change it to Player 2; else, we change it to Player 1. After the switch, we initiate the next movement.
