@@ -32,10 +32,17 @@ function createPlayer(name, marker) {
 }
 
 const gameController = (() => {
-    const player1 = createPlayer('Mark', 'O');
+    const player1 = createPlayer('Mark', 'o');
     const player2 = createPlayer('Isabell', 'x');
 
-    let playerCurrent = player1;
+    let playerCurrent;
+
+    if (!player1 || !player2 ) {
+        console.log('The info you put is wrong');
+    } else {
+        playerCurrent = player1;
+    }
+
 
     const checkWin = () => {
         const winningIndex = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
@@ -55,8 +62,34 @@ const gameController = (() => {
         }
         return true;
     }
-})();
 
-board.showBoard();
-board.writeBoard(8, 'x');
-board.showBoard();
+    const changePlayer = () => {
+        if (playerCurrent == player1) {
+            playerCurrent = player2;
+        } else {
+            playerCurrent = player1;
+        }
+    }
+
+    const playerMove = (position) => {
+        const makeMove = board.writeBoard(position, playerCurrent.marker);
+        if (makeMove) {
+            board.showBoard();
+            const hasWon = checkWin();
+            const isDrawn = checkTie();
+            if (hasWon) {
+                console.log('You won!');
+                return;
+            } else if (isDrawn) {
+                console.log('Its a tie!');
+                return;
+            } else {
+                changePlayer();
+            }
+        } else {
+            console.log('Sorry, something wrong happened. Try again with a right number or with an empty cell');
+        }
+    }
+
+    return {playerMove}
+})();
