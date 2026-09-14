@@ -16,7 +16,11 @@ const board = (() => {
             return false;
         }
     }
-    return {showBoard, writeBoard};
+
+    const getCell = (index) => {
+        return board[index];
+    }
+    return {showBoard, writeBoard, getCell};
 })();
 
 function createPlayer(name, marker) {
@@ -27,9 +31,23 @@ function createPlayer(name, marker) {
     return {name, marker};
 }
 
+const gameController = (() => {
+    const player1 = createPlayer('Mark', 'O');
+    const player2 = createPlayer('Isabell', 'x');
+
+    let playerCurrent = player1;
+
+    const checkWin = () => {
+        const winningIndex = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
+        for (const combination of winningIndex) {
+            if (board.getCell(combination[0]) == playerCurrent.marker && board.getCell(combination[1]) == playerCurrent.marker && board.getCell(combination[2]) == playerCurrent.marker) {
+                return true;
+            }
+        }
+        return false;
+    }
+})();
+
 board.showBoard();
 board.writeBoard(8, 'x');
 board.showBoard();
-
-const player1 = createPlayer('Mark', 'O');
-console.log(player1)
