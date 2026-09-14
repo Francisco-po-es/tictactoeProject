@@ -32,6 +32,8 @@ function createPlayer(name, marker) {
 }
 
 const gameController = (() => {
+
+    let gameStatus = true
     const player1 = createPlayer('Mark', 'o');
     const player2 = createPlayer('Isabell', 'x');
 
@@ -72,22 +74,26 @@ const gameController = (() => {
     }
 
     const playerMove = (position) => {
-        const makeMove = board.writeBoard(position, playerCurrent.marker);
-        if (makeMove) {
-            board.showBoard();
-            const hasWon = checkWin();
-            const isDrawn = checkTie();
-            if (hasWon) {
-                console.log('You won!');
-                return;
-            } else if (isDrawn) {
-                console.log('Its a tie!');
-                return;
+        if (gameStatus) {
+            const makeMove = board.writeBoard(position, playerCurrent.marker);
+            if (makeMove) {
+                board.showBoard();
+                const hasWon = checkWin();
+                const isDrawn = checkTie();
+                if (hasWon) {
+                    console.log('You won!');
+                    gameStatus = false;
+                } else if (isDrawn) {
+                    console.log('Its a tie!');
+                    gameStatus = false;
+                } else {
+                    changePlayer();
+                }
             } else {
-                changePlayer();
+                console.log('Sorry, something wrong happened. Try again with a right number or with an empty cell');
             }
         } else {
-            console.log('Sorry, something wrong happened. Try again with a right number or with an empty cell');
+            console.log('The game is already over! Please refresh to play again.');
         }
     }
 
