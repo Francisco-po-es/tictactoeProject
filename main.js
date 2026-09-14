@@ -46,6 +46,15 @@ const gameController = (() => {
         }
         return false;
     }
+
+    const checkTie = () => {
+        for (let i = 0; i <= 8; i++) {
+            if (board.getCell(i) == '') {
+                return false;
+            }
+        }
+        return true;
+    }
 })();
 
 board.showBoard();
