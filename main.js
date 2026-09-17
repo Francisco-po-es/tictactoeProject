@@ -99,3 +99,18 @@ const gameController = (() => {
 
     return {playerMove}
 })();
+
+const DOM = (() => {
+    const container = document.getElementById('container');
+    const board = document.createElement('div');
+    board.id = 'board';
+    container.appendChild(board);
+    const menu = document.createElement('div');
+    menu.id = 'menu';
+    container.appendChild(menu);
+    for (i=0; i <= 9; i++) {
+        let cell = document.createElement('div');
+        cell.id = 'cell';
+        board.appendChild(cell);
+    }
+})()
