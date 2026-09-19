@@ -78,22 +78,23 @@ const gameController = (() => {
             const makeMove = board.writeBoard(position, playerCurrent.marker);
             if (makeMove) {
                 board.showBoard();
+                DOM.updateDisplay();
                 const hasWon = checkWin();
                 const isDrawn = checkTie();
                 if (hasWon) {
-                    console.log('You won!');
+                    DOM.writeModal('You won!');
                     gameStatus = false;
                 } else if (isDrawn) {
-                    console.log('Its a tie!');
+                    DOM.writeModal('Its a tie!');
                     gameStatus = false;
                 } else {
                     changePlayer();
                 }
             } else {
-                console.log('Sorry, something wrong happened. Try again with a right number or with an empty cell');
+                alert('Sorry, something wrong happened. Try again with a right number or with an empty cell');
             }
         } else {
-            console.log('The game is already over! Please refresh to play again.');
+            alert('The game is already over! Please refresh to play again.');
         }
     }
 
@@ -102,15 +103,48 @@ const gameController = (() => {
 
 const DOM = (() => {
     const container = document.getElementById('container');
-    const board = document.createElement('div');
-    board.id = 'board';
-    container.appendChild(board);
+    const boardDOM = document.createElement('div');
+    boardDOM.id = 'board';
+    container.appendChild(boardDOM);
     const menu = document.createElement('div');
     menu.id = 'menu';
     container.appendChild(menu);
-    for (i=0; i < 9; i++) {
+
+    for (let i=0; i < 9; i++) {
         let cell = document.createElement('div');
-        cell.id = 'cell';
-        board.appendChild(cell);
+        cell.classList.add('cell')
+        boardDOM.appendChild(cell);
+        cell.addEventListener('click', () => {
+            gameController.playerMove(i);
+        })
     }
+
+    const updateDisplay = () => {
+        let cells = document.getElementsByClassName('cell');
+        for (let i=0; i < 9; i++) {
+            cells[i].textContent = board.getCell(i);
+        }
+    }
+
+    const writeModal = (message) => {
+        const dialog = document.createElement('dialog');
+        dialog.id = 'modal';
+        const span = document.createElement('span');
+        span.textContent = message;
+        container.appendChild(dialog);
+        dialog.appendChild(span);
+        dialog.showModal();
+        dialog.addEventListener("click", e => {
+            const dialogDimensions = dialog.getBoundingClientRect()
+            if (
+                e.clientX < dialogDimensions.left ||
+                e.clientX > dialogDimensions.right ||
+                e.clientY < dialogDimensions.top ||
+                e.clientY > dialogDimensions.bottom
+            ) {
+                dialog.close()
+            }
+        })
+    }
+    return {updateDisplay, writeModal};
 })()

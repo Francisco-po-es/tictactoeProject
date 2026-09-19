@@ -23,6 +23,11 @@
     grid-template-rows: repeat(3, 1fr);
 }
 
-#cell {
+.cell {
     border: 1px black dashed;
+    font-size: 3rem;
+}
+
+#modal {
+    margin: auto;
 }
