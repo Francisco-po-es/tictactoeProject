@@ -1,3 +1,11 @@
+:root {
+    --root: #fafafa;
+    --primary: #222;
+    --secondary: #fff;
+    --border: #222;
+    --button: #222;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,23 +17,93 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 50% 1fr;
-    grid-template-areas: 
+    grid-template-areas:
         'board menu';
+    background-color: var(--root);
 }
 
 #board {
     grid-area: board;
     height: 100%;
     min-width: 100%;
-    background-color: brown;
+    background-color: var(--secondary);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 }
 
 .cell {
-    border: 1px black dashed;
+    border: 1px solid var(--border);
     font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #eeeeee;
+}
+
+#menu {
+    grid-area: menu;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+#score-display {
+    display: flex;
+    gap: 20px;
+}
+
+#score-display span {
+    padding: 10px 15px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: 1px solid var(--button);
+    background-color: var(--button);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: white;
+    color: var(--button);
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+dialog {
+    margin: auto;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+}
+
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    text-align: center;
+}
+
+dialog::backdrop {
+    background-color: rgb(0 0 0 / 0.3);
 }
 
 #modal {
